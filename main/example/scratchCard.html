@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../scratchCard/index.js"></script>
+
+</head>
+<body>
+<div id="scratchContainer" style="width: 300px;height: 100px;position: relative"></div>
+
+<script>
+//$('#scratchContainer').ScratchCardPlugin({
+//    "contentType":"text",
+//    "fillContent":'gray',
+//    "fillType":'color',
+//     "scratchContent":"你好，中国",
+//});
+$('#scratchContainer').ScratchCardPlugin({
+    "fillContent":'../../image/googlelogo.jpg',
+    "fillType":'image',
+    "contentType":"image",
+    "scratchContent":"http://www.baidu.com/img/bdlogo.gif",
+});
+
+</script>
+</body>
+</html>

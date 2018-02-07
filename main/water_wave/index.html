@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加水波纹效果</title>
+
+</head>
+<body>
+
+<div class="wave wave0"></div>
+<div class="wave wave1"></div>
+<div class="wave wave2"></div>
+<div class="wave wave3"></div>
+<div class="wave wave4"></div>
+<div class="wave wave5"></div>
+
+<p>1、六個 div 疊在一起<br>
+    2 、背景設為固定：background-attachment:fixed;，然後讓背景的尺寸有大有小，<br>
+    3、搭配 CSS 的 animation，就可以讓六個 div 依序出現
+</p>
+
+<style>
+
+    .wave{
+        position:absolute;
+        top:calc((100% - 30px)/2);
+        left:calc((100% - 30px)/2);
+        width:30px;
+        height:30px;
+        border-radius:300px;
+        background:url('/image/water_wave_01.jpg');
+        background-attachment:fixed;//设置图片背景固定 不因为设置了scale的值 就整体缩小背景固定 在那一块 可以取消了 看下效果也还可以 只是没有波浪效果
+        background-position:center center;
+    }
+    .wave0{
+        z-index:2;
+        background-size:auto 106%;
+        -webkit-animation:w 1s forwards;
+    }
+    .wave1{
+        z-index:3;
+        background-size:auto 102%;
+        -webkit-animation:w 1s .2s forwards;
+    }
+    .wave2{
+        z-index:4;
+        background-size:auto 104%;
+        -webkit-animation:w 1s .4s forwards;
+    }
+    .wave3{
+        z-index:5;
+        background-size:auto 101%;
+        -webkit-animation:w 1s .5s forwards;
+    }
+    .wave4{
+        z-index:6;
+        background-size:auto 102%;
+        -webkit-animation:w 1s .8s forwards;
+    }
+    .wave5{
+        z-index:7;
+        background-size:auto 100%;
+        -webkit-animation:w 1s 1s forwards;
+    }
+
+
+    @-webkit-keyframes w{
+        0%{
+            top:calc((100% - 30px)/2);
+            left:calc((100% - 30px)/2);
+            width:30px;
+            height:30px;
+        }
+        100%{
+            top:calc((100% - 300px)/2);
+            left:calc((100% - 300px)/2);
+            width:300px;
+            height:300px;
+        }
+    }
+
+</style>
+
+</body>
+</html>

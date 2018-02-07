@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>下拉刷新</title>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../loadMore/index.js"></script>
+</head>
+<body>
+
+<div style="height: 300px;width: 100%;border: 1px solid #000000">
+    测试1111111
+</div>
+
+<div style="height: 300px;width: 100%;border: 1px solid #000000">
+    测试1111111
+</div>
+
+<div style="height: 300px;width: 100%;border: 1px solid #000000">
+    测试1111111
+</div>
+<div style="height: 300px;width: 100%;border: 1px solid #000000">
+    测试1111111
+</div>
+
+<div class="news_list">
+
+</div>
+
+<script>
+
+    var Load = $.loadMorePlugin({
+        isAutoLoad:true,//是否开始默认的加载 跟随滚动条加载
+        callBack:getData
+    });
+    init();
+    function init(){
+        Load.initEvent();
+    }
+    function inithtml(datas){
+
+        for(var  index =0 ; index < datas.length;index++){
+            var  data = datas[index];
+            var item = $('<div class="item"></div>');
+            var img = $('<img src="'+data.imgUrl+'">');
+            var $rightContainer = $('<div class="item_right"></div>');
+            $rightContainer.append('<h>'+ data.title+ '</h>').append('<p>'+ data.time+ '</p>').append('<p>'+ data.des+ '</p>');
+            $('.news_list').append(item.append($rightContainer));
+        }
+
+
+
+    }
+    //获取数据
+    function getData(){
+        $.ajax({
+            url:'../model/loadMore.json',
+            type:'get',
+            success:function(data){
+                inithtml(data.data);
+            },
+            error:function(){
+                alert("shibai");
+            }
+
+        })
+
+    }
+</script>
+</body>
+</html>

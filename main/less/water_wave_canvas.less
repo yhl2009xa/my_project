@@ -1,0 +1,15 @@
+.wave_ripple{
+  position: absolute;
+  border-radius:100% ;
+  transform: scale(0);
+  animation: wave .75s ease-out;
+  background: rgba(0,0,0,.15);
+};
+
+
+@keyframes  wave{
+  to{
+    transform: scale(2);
+    opacity: 0;
+  }
+}

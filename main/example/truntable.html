@@ -1,0 +1,145 @@
+<!-------如何解决锯齿问题啊------------>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>大转盘</title>
+</head>
+
+<body>
+<img src="../../image/1.png" id="shan-img" style="display:none;" />
+<img src="../../image/2.png" id="sorry-img" style="display:none;" />
+<img class="pointer" id="pointer" src="../../image/turnplate-pointer.png" style="display: none"/>
+<div class="turnPlate">
+    <canvas id="wheelcanvas"  width="600px" height="600px"></canvas>
+</div>
+
+<script>
+    var turnplate={
+        restaraunts:["50M免费流量包", "10闪币", "谢谢参与", "5闪币", "10M免费流量包", "20M免费流量包", "20闪币 ", "30M免费流量包", "100M免费流量包", "2闪币"],//大转盘奖品名称
+        colors:["#FFF4D6", "#FFFFFF", "#FFF4D6", "#FFFFFF","#FFF4D6", "#FFFFFF", "#FFF4D6", "#FFFFFF","#FFF4D6", "#FFFFFF"],//大转盘奖品区块对应背景颜色
+        outsideRadius:192,			//大转盘外圆的半径
+        textRadius:155,				//大转盘奖品位置距离圆心的距离
+        insideRadius:68,			//大转盘内圆的半径
+        startAngle:0,				//开始角度
+        bRotate:false				//false:停止;ture:旋转
+    };
+
+    window.onload = function(){
+        draw();
+    }
+
+    function draw() {
+
+
+        var canvas = document.getElementById("wheelcanvas");
+        if(canvas.getContext){
+
+            var arc = 2 * Math.PI / turnplate.restaraunts.length  ;
+            var ctx = canvas.getContext("2d");
+            //清空矩形
+            ctx.clearRect(0,0,422,422);
+
+        }
+
+        for(var index = 0 ;index < turnplate.restaraunts.length ;index ++){
+
+
+            var angle = turnplate.startAngle + index * arc;
+            ctx.strokeStyle = "#FFBE04";
+            ctx.lineWidth = 2;
+            ctx.fillStyle = turnplate.colors[index];
+
+            ctx.beginPath();
+            ctx.arc(211, 211, turnplate.outsideRadius, angle, angle + arc, false);
+            ctx.arc(211, 211, turnplate.insideRadius, angle + arc,angle, true);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fill();
+            //锁画布(为了保存之前的画布状态)
+            ctx.save();
+
+            //绘制奖品
+            ctx.fillStyle = "#E5302F";
+            var text = turnplate.restaraunts[index];
+            var line_height = 17;
+            //计算每个奖品文本的坐标x,y
+            ctx.translate(211 + Math.cos(angle + arc / 2) * turnplate.textRadius, 211 + Math.sin(angle + arc / 2) * turnplate.textRadius);
+
+            //文字的翻转的角度是圆弧切线的位置
+            ctx.rotate(angle + arc/2  +  Math.PI /2);
+            //文字超出时分两行
+
+            if(text.indexOf("M")>0){//流量包
+                var texts = text.split("M");
+                for(var j = 0; j<texts.length; j++){
+                    ctx.font = j == 0?'bold 20px Microsoft YaHei':'16px Microsoft YaHei';
+                    if(j == 0){
+                        ctx.fillText(texts[j]+"M", -ctx.measureText(texts[j]+"M").width / 2, j * line_height);
+                    }else{
+                        ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+                    }
+                }
+            }else if(text.indexOf("M") == -1 && text.length>6){//奖品名称长度超过一定范围
+                text = text.substring(0,6)+"||"+text.substring(6);
+                var texts = text.split("||");
+                for(var j = 0; j<texts.length; j++){
+                    ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+                }
+            }else{
+                //在画布上绘制填色的文本。文本的默认颜色是黑色
+                //measureText()方法返回包含一个对象，该对象包含以像素计的指定字体宽度
+                ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+            }
+            //添加对应图标
+            if(text.indexOf("闪币")>0){
+                var img= document.getElementById("shan-img");
+                img.src = "../../image/1.png";
+                ctx.drawImage(img,-15,10);
+            }else if(text.indexOf("谢谢参与")>=0){
+                var img= document.getElementById("sorry-img");
+                img.src = "../../image/2.png";
+                ctx.drawImage(img,-15,10);
+            }
+            //把当前画布返回（调整）到上一个save()状态之前
+            ctx.restore();
+            //----绘制奖品结束----
+
+        }
+        var img= document.getElementById("pointer");
+        ctx.drawImage(img,145,100);
+        ctx.strokeStyle = "#FFBE04";
+
+    }
+
+    function randItem(){
+      Math.floor(Math.random() + turnplate.restaraunts.length);
+    }
+
+
+    //旋转转盘 item:奖品位置; txt：提示语;
+    var rotateFn = function (item, txt){
+        //最终奖页面所在的位置 弧度
+        var angles = item * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length*2));
+        if(angles<270){
+            angles = 270 - angles;
+        }else{
+            angles = 360 - angles + 270;
+        }
+        $('#wheelcanvas').stopRotate();
+        $('#wheelcanvas').rotate({
+            angle:0,
+            animateTo:angles+1800,
+            duration:8000,
+            callback:function (){
+                alert(txt);
+                turnplate.bRotate = !turnplate.bRotate;
+            }
+        });
+    };
+
+</script>
+
+</body>
+</html>

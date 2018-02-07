@@ -1,0 +1,57 @@
+.com_translate_3D{
+  transform-style: preserve-3d;//指定子元素也为3D效果
+  position: relative;
+  transform: rotateX(-40deg) rotateY(32deg);//一个正对我们的元素 当变化中心点居于元素内部点时 我们无法看到其他的边只有正面 所以将整体先需要倾斜
+  border: 1px solid #ccc;
+  width: 100px;
+  height: 100px;
+  animation:spin 2s ease-out;
+
+  .translate_ele{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: 100px;
+    transition: all 2s ease-out;
+  }
+
+  .front{
+      transform: translateZ(50px);//向Y轴方向移动50像素
+  }
+  .back{
+    transform: rotateY(-180deg) translateZ(50px);//先Y轴旋转180 使得字向外面 然后使向Z旋转50px
+  }
+  .top{
+    transform: rotateX(90deg) translateZ(50px);//先X轴旋转90 使得字向外面 然后使向Z旋转50px
+  }
+  .down{
+    transform: rotateX(-90deg) translateZ(50px);//先X轴旋转90 使得字向外面 然后使向Z旋转50px
+  }
+  .left{
+    transform: rotateY(-90deg) translateZ(50px);//先X轴旋转90 使得字向外面 然后使向Z旋转50px
+  }
+  .right{
+    transform: rotateY(90deg) translateZ(50px);
+  }
+
+
+  @-webkit-keyframes spin
+  {
+    from
+    {
+      -webkit-transform: translateZ(-10em) rotateX(0) rotateY(0deg);
+      transform: translateZ(-10em) rotateX(0) rotateY(0deg);
+    }
+
+    to
+    {
+      -webkit-transform: translateZ(-10em) rotateX(360deg) rotateY(360deg);
+      transform: translateZ(-10em) rotateX(360deg) rotateY(360deg);
+    }
+  }
+
+}

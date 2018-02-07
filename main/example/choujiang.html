@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>抽奖</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+	<script>
+		var t = null;
+		var centerX = 400;//圆心X坐标
+		var centerY = 250;//圆心Y坐标
+		var ctx = null;
+		var ctx2 = null;
+		var lineLen = 150;
+		var myCanvas2 = null;
+		window.onload = function(){
+			var myCanvas = document.getElementById("canvas1");
+			ctx = myCanvas.getContext("2d");
+			myCanvas2 = document.getElementById("canvas2");
+			ctx2 = myCanvas2.getContext("2d");
+			createCircle();//绘制转盘圆环
+			createCirText();//绘制转盘上的字
+			ctx2.translate(centerX,centerY);
+			initPoint();//绘制转盘指针
+		}
+		//绘制转盘圆环
+		function createCircle(){
+			//圆环上的颜色
+			var color = ["#D14278","#953FAE","#586837","#C7C76F","#AF2729","#3A9C76","#CCA540","#5998FE","#52DB53","#FEB834"];
+			var startAngle = 0;
+			var endAngle = 0;
+			//画一个10等份扇形组成的圆形
+			for (var i = 0; i< 10; i++){
+				//保存当前绘画状态，以便我们画完这副画以后，再恢复到这个状态，画另一副画。
+            	ctx.save();
+				ctx.beginPath(); 
+				/*ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+				x和y参数是圆心坐标，radius是半径，
+				startAngle和endAngle则是扇形的起始角度和终止角度（以弧度表示），
+				anticlockwise表示做图时应该逆时针画（true）还是顺时针画（false）
+				*/
+				startAngle = Math.PI*(2/10)*i;
+				endAngle = Math.PI*(2/10)*(i+1);
+				ctx.arc(centerX, centerY, 150, startAngle, endAngle, false);
+				ctx.lineWidth = 160.0;
+				ctx.strokeStyle =  color[i];
+				ctx.stroke();//空心圆
+				ctx.restore();
+			}
+			
+		}
+		
+		var info=["一等奖","特等奖","三等奖","四等奖","五等奖","安慰奖","谢谢参与","八等奖","九等奖","十等奖"];
+		function createCirText(){
+			
+			ctx.font = "Bold 20px Arial"; // 设置字体
+			ctx.textAlign='start';//文本水平对齐方式
+			ctx.textBaseline='middle';//文本垂直方向，基线位置 
+			ctx.fillStyle = "#000";// 设置填充颜色
+			var step = 2*Math.PI/10;//10分之1圆的弧度
+			for ( var i = 0; i < 10; i++) {
+				 ctx.save();
+				 ctx.beginPath();
+				 ctx.translate(centerX,centerY);//平移到圆心
+				 ctx.rotate(i*step+step/2);//从时钟15点处开始旋转弧度i*step+step/2
+				 ctx.fillText(info[i],125,0);
+				 ctx.restore();
+		    }
+		}
+		
+// 		绘制转盘指针
+		function initPoint(){
+			
+			//直线加箭头
+			ctx2.beginPath();//开始绘制
+			ctx2.moveTo(0,2);//起始位置
+			ctx2.lineTo(lineLen,2);//终点位置
+			ctx2.lineTo(lineLen,4);
+			ctx2.lineTo(lineLen+10,0);//箭头的长度
+			ctx2.lineTo(lineLen,-4);
+			ctx2.lineTo(lineLen,-2);
+			ctx2.lineTo(0,-2);			
+			ctx2.fillStyle = "#C01020";
+			ctx2.fill();
+			ctx2.closePath();
+		}
+		
+		//点击按钮开始旋转
+		function doFly(){
+			myCanvas2.width = 800;
+			ctx2.translate(centerX,centerY);
+			if(t){
+				return;
+			}
+			 var step = 50 +Math.random()*10;
+			 var angle = 0;//旋转的角度
+			 t = setInterval(function(){
+				step *= 0.95;
+				if(step <= 0.1){
+					clearInterval(t);
+					t = null;
+					var pos = Math.floor(angle/36);//因为分成了10等分，旋转的角度除以36，可得到当前旋转的度数
+					alert(info[pos]);
+				}else{
+					ctx2.restore();
+					ctx2.save();
+					ctx2.rotate(angle * Math.PI/180);
+					ctx2.clearRect(-5,-5, 170, 18);//先清
+					
+					angle+=step;
+				   	if(angle > 360){
+						  angle -=360;
+				   	}
+					ctx2.restore();
+					ctx2.save();
+					ctx2.rotate(angle * Math.PI/180);
+					initPoint();
+				}
+			},60);
+		}
+	</script>
+  </head>
+  
+  <body>
+  	<div style="width:800px;height:510px;margin:auto;border:1px solid gray;">
+	    <canvas id="canvas1" width="800px" height="480px" style="position:absolute;">
+	    	您的浏览器不支持canvas！
+	    </canvas>
+	    <canvas id="canvas2" width="800px" height="480px" style="position:absolute;">
+	    	您的浏览器不支持canvas！
+	    </canvas>
+  	</div>
+	<input type="button" id="flyBtn" value="转起来吧" onclick="doFly()"/>
+  </body>
+</html>

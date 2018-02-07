@@ -1,0 +1,25 @@
+{
+  "errorCode": 0,
+  "errorDesc": "成功",
+  "data": [
+    {
+      "title": "\"Salon de Lei\" 艺术沙龙开幕式",
+      "time":"2016年11月12日",
+      "des":"上海西岸艺术中心B馆",
+      "imgUrl":[
+        "/images/water_wave_01.jpg"
+      ]
+
+    },
+    {
+      "title": "中恒天投资基金斩获2016第一财经金砖论坛大奖",
+      "time":"2016年11月10日",
+      "des":"上海陆家嘴丽兹卡尔顿3F",
+      "imgUrl":[
+        "/images/water_wave_01"
+      ]
+
+    }
+
+  ]
+}

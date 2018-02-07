@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../canvas_particle_text/index.js"></script>
+</head>
+<body>
+<div class="canvas_id" style="width: 100%;height: 500px">
+
+
+</div>
+
+<script>
+
+
+
+
+
+    $.ajax({
+        url:'http://hq.sinajs.cn/?list=hf_CT,hf_NID,hf_PBD,hf_SND,hf_ZSD,hf_AHD,hf_CAD,hf_S,hf_W,hf_C,hf_BO,hf_SM,hf_TRB,hf_HG,hf_NG,hf_CL,hf_SI,hf_GC,hf_LHC,hf_OIL,hf_XAU,hf_XAG,hf_XPT,hf_XPD',
+        success:function(data){
+            console.log("asd");
+        }
+    })
+
+    $('.canvas_id').particleTextPlugin();
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+body,
+ul,
+dl,
+dd,
+dt,
+ol,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+textarea,
+form,
+select,
+fieldset,
+table,
+td,
+div,
+input {
+  margin: 0;
+  padding: 0;
+  -webkit-text-size-adjust: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 12px;
+  font-weight: normal;
+}
+.header {
+  width: 100%;
+}
+.header img {
+  width: 100%;
+}
+.back {
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  position: fixed;
+  z-index: -1;
+  background-color: #f8e6e6;
+}
+.wrapContent .dec {
+  font-size: 40px;
+  width: 100%;
+  font-family: 'STXingkai';
+  text-shadow: #f3f3f3 1px 1px 0px, #b2b2b2 1px 2px 0;
+}
+.suspend_Drag {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 100% ;
+  position: relative;
+  background: url("resource/music.png") no-repeat center;
+  opacity: 0.5;
+}
+.suspend_Drag .inner_suspend_Drag {
+  width: 10px;
+  height: 10px;
+  border-radius: 100% ;
+  background: #fff;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+.wrapContent1 {
+  width: 100%;
+  height: 400px;
+  animation: changeColor 4s linear infinite ;
+  animation-direction: alternate;
+  position: absolute;
+  opacity: 0.5;
+  display: flex;
+  top: 50%;
+  margin-top: -200px;
+}
+.wrapContent1 .item {
+  flex: 1;
+  position: relative;
+  display: none;
+  cursor: pointer;
+}
+.wrapContent1 .item:hover .pre {
+  transform: rotate3d(0, 1, 0, -180deg);
+  transition-duration: 0.5s;
+}
+.wrapContent1 .item:hover .back {
+  transform: rotate3d(0, 1, 0, 0deg);
+  transition-duration: 0.5s;
+}
+.wrapContent1 .item .pre {
+  width: 196px;
+  height: 300px;
+  display: inline-block;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  margin: auto;
+  transform: rotate3d(0, 1, 0, 0deg);
+  transition-duration: 0.5s;
+  z-index: 2;
+}
+.wrapContent1 .item .back {
+  width: 196px;
+  height: 300px;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  margin: auto;
+  transform: rotate3d(0, 1, 0, -180deg);
+  transition-duration: 0.5s;
+}
+.wrapContent1 .item > div {
+  backface-visibility: hidden;
+}
+.on {
+  -webkit-animation: rotating 4s linear infinite;
+  animation: rotating 4s linear infinite;
+}
+@keyframes changeColor {
+  from {
+    background: #ffe;
+  }
+  to {
+    background: #16A085;
+  }
+}
+@-webkit-keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
