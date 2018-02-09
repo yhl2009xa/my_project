@@ -15,6 +15,7 @@
   "dependencies": {
     "Particleground.js": "^1.1.0",
     "grunt-contrib-clean": "^1.0.0",
-    "load-grunt-tasks": "^3.5.2"
+    "load-grunt-tasks": "^3.5.2",
+    "socket.io": "^2.0.4"
   }
 }

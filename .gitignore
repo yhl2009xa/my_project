@@ -1,4 +1,5 @@
 /node_modules
+/websocket/node_modules
 /.idea
 /test
 /wj_web/node_modules

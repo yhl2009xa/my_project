@@ -1,0 +1,16 @@
+{
+  "name": "",
+  "description": "聊天网站",
+  "devDependencies": {
+    "express": "^4.13.3"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "fs": "0.0.1-security",
+    "grunt": "^1.0.1",
+    "http": "0.0.0",
+    "jquery": "^1.12.4",
+    "path": "^0.12.7",
+    "socket.io": "^2.0.4"
+  }
+}
