@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>下拉刷新</title>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../drag_sort/index.js"></script>
+</head>
+<body>
+<div>
+<p>asdsasadasddassadsasasf第三方的士大夫的方法水电费水电费</p>
+</div>
+
+<ul class="drag_sort">
+    <li class="drag_item"  >
+        <img src="http://www.jq22.com/img/cs/500x500-1.png" width="150" height="150">
+        <span class="rmPicture close">×</span>
+    </li>
+
+    <li class="drag_item"  >
+        <img src="http://www.jq22.com/img/cs/500x500-2.png" width="150" height="150">
+        <span  class="rmPicture close">×</span>
+    </li>
+
+    <li class="drag_item"  >
+        <img src="http://www.jq22.com/img/cs/500x500-3.png" width="150" height="150">
+        <span class="rmPicture close">×</span>
+    </li>
+
+    <li class="drag_item"  >
+        <img src="http://www.jq22.com/img/cs/500x500-4.png" width="150" height="150">
+        <span  class="rmPicture close">×</span>
+    </li>
+
+    <li class="drag_item"  >
+        <img src="http://www.jq22.com/img/cs/500x500-5.png" width="150" height="150">
+        <span class="rmPicture close">×</span>
+    </li>
+
+    <li class="drag_item"  >
+        <img src="http://www.jq22.com/img/cs/500x500-6.png" width="150" height="150">
+        <span  class="rmPicture close">×</span>
+    </li>
+
+    <li class="drag_item" >
+        <img src="http://www.jq22.com/img/cs/500x500-7.png" width="150" height="150">
+        <span  class="rmPicture close">×</span>
+    </li>
+</ul>
+
+
+<script>
+    new dragImg({
+        ele:'.drag_sort'
+    })
+</script>
+
+<style>
+
+    .drag_sort{
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+    }
+
+    .drag_sort li{
+        list-style-type: none;
+        position: relative;
+        margin: 0px 10px;
+    }
+    .drag_sort li span{
+        position: absolute;
+        right: 10px;
+        top:10px
+    }
+</style>
+</body>
+</html>
