@@ -34,9 +34,10 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
     }
 
     dragImg.prototype.initVariables = function () {
-        this.isMove = false;//当前是否移动
+        this.isDrag = false;//当前是否移动
         this.$moveDom = null;//当前移动的dom元素
         this.initialPointsArr = [];//存放最初的每个点的位置 后面需要根据当前位置位移
+        this.curr_drag_index = null; //当前拖拽的元素位置
 
     }
     /**
@@ -46,28 +47,34 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
         // this.$ele.on("touchStart",".drag_item",this.touchStartHandle);
         // this.$ele.on("touchMove",".drag_item",this.touchMoveHandle);
         // this.$ele.on("touchEnd",".drag_item",this.touchEndHandle);
-        this.$ele.on("mousedown", ".drag_item", this.mousedownHandle.bind(this));
-        $(document).on("mouseup", this.mouseupHandle.bind(this));
-        $(document).on("mousemove", this.mousemoveHandle.bind(this));
+        this.$ele.on("touchstart", ".drag_item", this.mousedownHandle.bind(this));
+        $(document).on("touchend", this.mouseupHandle.bind(this));
+        $(document).on("touchmove", this.mousemoveHandle.bind(this));
     }
 
     /**
+     *
      * moveStartOffsetX moveStartOffsetY 用来定位最初点与当前触摸点的 上移 还是下移
      * 不用client 来判断是因为client不受滚动条的影响 永远为正数
-     *
-     * @param e
+     * 每次只允许一个触摸点
+     * @param
      */
     dragImg.prototype.mousedownHandle = function (e) {
-        this.isMove = true;
+        if( this.isDrag ){
+            return ;
+        }
+        var evt = window.event || e;
+        this.isDrag = true;
         this.moveStartX = $(e.currentTarget).position().left;
         this.moveStartY = $(e.currentTarget).position().top;
-        this.moveStartClientX = e.clientX;
-        this.moveStartClientY = e.clientY;
+        this.moveStartClientX = evt.touches[0].clientX;
+        this.moveStartClientY = evt.touches[0].clientY;
 
         this.$moveDom = $(e.currentTarget);
+        this.curr_drag_index = $(e.currentTarget).index();
     }
     dragImg.prototype.mouseupHandle = function (e) {
-        if(this.isMove){
+        if(this.isDrag){
             var currIndex =   this.$moveDom.index();
             this.move(this.$moveDom,this.initialPointsArr[currIndex].left,this.initialPointsArr[currIndex].top,function () {
                 $(this).css({
@@ -76,25 +83,26 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
                 }) ;
             });
         }
-        this.isMove = false;
+        this.isDrag = false;
     }
 
     dragImg.prototype.mousemoveHandle = function (e) {
         e.preventDefault() ;
 
-        if (!this.isMove) {
+        if (!this.isDrag) {
             return
         }
         this.$moveDom.css({
             "opacity": "0.8",
             "z-index": 999
         });
-        var left = e.clientX - this.moveStartClientX + this.moveStartX,
-            top = e.clientY - this.moveStartClientY + this.moveStartY;
+        var evt = window.event || e;
+        var left = evt.touches[0].clientX - this.moveStartClientX + this.moveStartX,
+            top = evt.touches[0].clientY - this.moveStartClientY + this.moveStartY;
         this.$moveDom.css("left", left);
         this.$moveDom.css("top", top);
 
-        this.collisionCheck( e.clientX,e.clientY);
+        this.collisionCheck( evt.touches[0].clientX, evt.touches[0].clientY);
     }
 
     /**
@@ -103,7 +111,7 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
      *
      */
     dragImg.prototype.collisionCheck = function(pointX,pointY){
-       $(".drag_item",this.$ele).each(function(index,dom){
+        $(".drag_item",this.$ele).each(function(index,dom){
             if( this.$moveDom.index() == index){
                 return true ;
             }
@@ -174,11 +182,11 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
         var moveIndex = this.$moveDom.index(),
             $dom = $(".drag_item", this.$ele).eq(exchangeIndex)
         this.move($dom,this.initialPointsArr[moveIndex].left,this.initialPointsArr[moveIndex].top);
-       if(moveIndex > exchangeIndex){
-           this.$moveDom.insertBefore($(".drag_item", this.$ele).eq(exchangeIndex));
-       }else{
-           this.$moveDom.insertAfter($(".drag_item", this.$ele).eq(exchangeIndex));
-       }
+        if(moveIndex > exchangeIndex){
+            this.$moveDom.insertBefore($(".drag_item", this.$ele).eq(exchangeIndex));
+        }else{
+            this.$moveDom.insertAfter($(".drag_item", this.$ele).eq(exchangeIndex));
+        }
     }
 
 
@@ -197,36 +205,36 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
         }) ;
     },
 
-    /***
-     * 当前组件的渲染
-     */
-    dragImg.prototype.render = function () {
-        if ($(".drag_item", this.$ele).eq(0).css("position") == "absolute") {
-            return
-        }
-        for (var index = 0; index < $(".drag_item", this.$ele).length; index++) {
-            var $dom = $(".drag_item", this.$ele).eq(index);
-            $dom.attr("data-left", $dom.position().left);
-            $dom.attr("data-top", $dom.position().top);
-            $dom.attr("index", index);
-            this.initialPointsArr.push({
-                left:$dom.position().left,
-                offsetLeft:$dom.offset().left,
-                top:$dom.position().top,
-                offsetTop:$dom.offset().top,
-            })
-        }
+        /***
+         * 当前组件的渲染
+         */
+        dragImg.prototype.render = function () {
+            if ($(".drag_item", this.$ele).eq(0).css("position") == "absolute") {
+                return
+            }
+            for (var index = 0; index < $(".drag_item", this.$ele).length; index++) {
+                var $dom = $(".drag_item", this.$ele).eq(index);
+                $dom.attr("data-left", $dom.position().left);
+                $dom.attr("data-top", $dom.position().top);
+                $dom.attr("index", index);
+                this.initialPointsArr.push({
+                    left:$dom.position().left,
+                    offsetLeft:$dom.offset().left,
+                    top:$dom.position().top,
+                    offsetTop:$dom.offset().top,
+                })
+            }
 
-        for (var index = 0; index < $(".drag_item", this.$ele).length; index++) {
-            var $dom = $(".drag_item", this.$ele).eq(index);
-            $dom.css({
-                "position": "absolute",
-                "left": $dom.attr("data-left") + "px",
-                "top": $dom.attr("data-top") + "px"
-            });
-        }
+            for (var index = 0; index < $(".drag_item", this.$ele).length; index++) {
+                var $dom = $(".drag_item", this.$ele).eq(index);
+                $dom.css({
+                    "position": "absolute",
+                    "left": $dom.attr("data-left") + "px",
+                    "top": $dom.attr("data-top") + "px"
+                });
+            }
 
-    }
+        }
 
     /**
      * 如果当前只有一个指头或者

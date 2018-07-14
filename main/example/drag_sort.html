@@ -2,17 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>下拉刷新</title>
+    <title>拖拽排序</title>
     <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
-    <script src="../drag_sort/index.js"></script>
+    <!--<script src="../drag_sort/index.js"></script>-->
+    <script src="../drag_sort/mobile.js"></script>
 </head>
 <body>
-<div>
-<p>asdsasadasddassadsasasf第三方的士大夫的方法水电费水电费</p>
-</div>
+
+<style>
+
+    *{
+        padding: 0px;
+        margin: 0px;
+    }
+    .drag_sort{
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+        align-content: flex-start;
+
+    }
+
+    .drag_sort li{
+        list-style-type: none;
+        position: relative;
+        cursor: move;
+        opacity: 1;
+        z-index: 0;
+        margin: 0px 20px;
+    }
+    .drag_sort li span{
+        position: absolute;
+        right: 10px;
+        top:10px
+    }
+</style>
 
 <ul class="drag_sort">
-    <li class="drag_item"  >
+    <li class="drag_item" >
         <img src="http://www.jq22.com/img/cs/500x500-1.png" width="150" height="150">
         <span class="rmPicture close">×</span>
     </li>
@@ -55,24 +82,6 @@
     })
 </script>
 
-<style>
 
-    .drag_sort{
-        display: flex;
-        flex-wrap: wrap;
-        position: relative;
-    }
-
-    .drag_sort li{
-        list-style-type: none;
-        position: relative;
-        margin: 0px 10px;
-    }
-    .drag_sort li span{
-        position: absolute;
-        right: 10px;
-        top:10px
-    }
-</style>
 </body>
 </html>
