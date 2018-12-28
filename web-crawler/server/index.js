@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var compression = require('compression');
 var httpProxy = require('http-proxy');
+var controller = require('./controller');
 
 var app  = new express();
 var port = 8089;

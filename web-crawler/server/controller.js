@@ -3,7 +3,6 @@ const cheerio = require('cheerio');
 const async = require('async');
 const fs = require('fs');
 const url = require('url');
-const request =require('request');
 const hupuUrl = require('./const').HPURL;
 
 
@@ -52,12 +51,10 @@ for(let index = 1;index <=4;index++ ){
                     "pic3" : contentimg3
                 };
                 let picArr = [contentimg1,contentimg2,contentimg3];
-                fs.appendFile('data/result1.json', JSON.stringify(stad) ,'utf-8', function (err) {
+                fs.appendFile('./data/result1.json', JSON.stringify(stad) ,'utf-8', function (err) {
                     if(err) throw new Error("appendFile failed...");
                     //console.log("数据写入success...");
                 });
-                //定义一个以title为文件夹名的路径，作为以后下载图片时使用
-                let lujin = 'data/' + title + '/';
 
                 fs.exists('data/download_images',function (exists) {
                     if(!exists){
@@ -92,6 +89,10 @@ var downloadPic = (opts,path)=>{
         if(err){
            return console.log(err);
         }
-        fs.createWriteStream(path);
+        const stream =   fs.createWriteStream(path);
+        // const req = request.post('/somewhere');
+        // req.type('json');
+        stream.pipe(res);
     })
+
 }
