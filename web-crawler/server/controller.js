@@ -32,25 +32,27 @@ for(let index = 1;index <=4;index++ ){
                 let title = $('.bbs-hd-h1>h1').attr('data-title');//帖子标题
                 let tximg = $('.headpic:first-child>img').attr('src');//用户头像
                 let txname = $('.j_u:first-child').attr('uname');//用户ID
-                let contentimg1 = $('.quote-content>p:nth-child(1)>img').attr('src');//图1
-                let contentimg2 = $('.quote-content>p:nth-child(2)>img').attr('src');//图2
-                let contentimg3 = $('.quote-content>p:nth-child(3)>img').attr('src');//图3
-                ssr.push({
-                    'tx': tximg,
-                    'name': txname,
-                    'pic': contentimg1,contentimg2,contentimg3
-                });
+
+                let contentimgs = $('.quote-content>p>img').map(function(index,item){
+                    return  $(item).attr("src");
+                })
+
+                // let contentimg1 = $('.quote-content>p:nth-child(1)>img').attr('src');//图1
+                // let contentimg2 = $('.quote-content>p:nth-child(2)>img').attr('src');//图2
+                // let contentimg3 = $('.quote-content>p:nth-child(3)>img').attr('src');//图3
+                // ssr.push({
+                //     'tx': tximg,
+                //     'name': txname,
+                //     'pic': contentimg1,contentimg2,contentimg3
+                // });
 
                 let stad = {
                     "address": add,
                     "title":title,
                     "ID" : txname,
                     "touxiang" : tximg,
-                    "pic1" : contentimg1,
-                    "pic2" : contentimg2,
-                    "pic3" : contentimg3
+                    "pic":contentimgs.toString()
                 };
-                let picArr = [contentimg1,contentimg2,contentimg3];
                 fs.appendFile('./data/result1.json', JSON.stringify(stad) ,'utf-8', function (err) {
                     if(err) throw new Error("appendFile failed...");
                     //console.log("数据写入success...");
@@ -62,7 +64,7 @@ for(let index = 1;index <=4;index++ ){
                             if (err) {
                                 throw err;
                             }
-                            async.mapSeries(picArr,function(item, callback){
+                            async.mapSeries(contentimgs,function(item, callback){
                                 setTimeout(function(){
                                     //downloadPic方法下载图片
                                     downloadPic(item, 'data/'+ (new Date()).getTime() +'.jpg');
@@ -72,7 +74,13 @@ for(let index = 1;index <=4;index++ ){
                         });
                         console.log('ye')
                     }else {
-                        console.log('er')
+                        async.mapSeries(contentimgs,function(item, callback){
+                            setTimeout(function(){
+                                //downloadPic方法下载图片
+                                downloadPic(item, 'data/download_images/'+ (new Date()).getTime() +'.jpg');
+                                callback(null, item);
+                            },400);
+                        }, function(err, results){});
                     }
                 })
 
@@ -83,16 +91,64 @@ for(let index = 1;index <=4;index++ ){
     })
 }
 
+// var request=require("request");
+// var http = require('https')
+//
+// //保存图片
+// function downloadPic(url,path) {
+//     console.log(url);
+//     var option={
+//         path:'https://i10.hoopchina.com.cn/hupuapp/bbs/210130861371844/thread_210130861371844_20181218001817_s_109167_w_750_h_1000_57494.jpg?x-oss-process=image/resize,w_800/format,webp',
+//         headers:{
+//             'Referer':'https://m.hupu.com/'
+//         }
+//     };
+//
+//
+//     http.get(option,function (req,res) {
+//         var imgData = '';
+//         req.on('data',function (chunk) {
+//             imgData += chunk;
+//         })
+//         req.setEncoding('binary');
+//         req.on('end',function () {
+//             fs.writeFile(path,imgData,'binary',function (err) {
+//                 console.log('保存图片成功'+path)
+//             })
+//         })
+//     })
+// }
+
+
 
 var downloadPic = (opts,path)=>{
-    superagent.get(opts).end((err,res)=>{
-        if(err){
-           return console.log(err);
-        }
-        const stream =   fs.createWriteStream(path);
-        // const req = request.post('/somewhere');
-        // req.type('json');
-        stream.pipe(res);
-    })
+
+    console.log(opts);
+    let stream = fs.createWriteStream(path)
+
+    superagent.get(opts).set('Referer', '')
+        .set("User-Agent",
+            'User-Agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36 Core/1.47.933.400 QQBrowser/9.4.8699.400'
+        ).pipe(stream);
+
+    // superagent.get(req.query.url)
+    //     .set('Referer', '')
+    //     .set("User-Agent",
+    //         'User-Agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36 Core/1.47.933.400 QQBrowser/9.4.8699.400'
+    //     )
+    //     .end(function(err, result) {
+    //         if (err) {
+    //             //res.send(err);
+    //             return false;
+    //         }
+    //         res.end(result.body);
+    //         return;
+    //     });
+
+
+
+
+
+
 
 }
