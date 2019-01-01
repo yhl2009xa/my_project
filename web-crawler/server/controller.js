@@ -123,10 +123,19 @@ for(let index = 1;index <=4;index++ ){
 
 var downloadPic = (opts,path)=>{
 
-    console.log(opts);
-    let stream = fs.createWriteStream(path)
+    if(opts.indexOf("placeholder.png") > -1){
+        return ;
+    }
 
-    superagent.get(opts).set('Referer', '')
+    let queryOptions =  opts;
+     if(opts.indexOf("?")>-1){
+         queryOptions =  opts.substr(0,opts.indexOf("?"));
+     }
+
+    let stream = fs.createWriteStream(path);
+
+    console.log(queryOptions);
+    superagent.get(queryOptions).set('Referer', '')
         .set("User-Agent",
             'User-Agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36 Core/1.47.933.400 QQBrowser/9.4.8699.400'
         ).pipe(stream);
