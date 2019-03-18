@@ -3,4 +3,5 @@
 /.idea
 /test
 /wj_web/node_modules
-/wj_web/web-crawler
+/web-crawler/node_modules
+/web-crawler/data

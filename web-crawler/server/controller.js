@@ -4,6 +4,8 @@ const async = require('async');
 const fs = require('fs');
 const url = require('url');
 const hupuUrl = require('./const').HPURL;
+var dbHelper = require('./DBHelper/dbHelper');
+var huPuAction = require('./DBHelper/sqlText').huPuAction;
 
 
 
@@ -46,43 +48,42 @@ for(let index = 1;index <=4;index++ ){
                 //     'pic': contentimg1,contentimg2,contentimg3
                 // });
 
-                let stad = {
-                    "address": add,
-                    "title":title,
-                    "ID" : txname,
-                    "touxiang" : tximg,
-                    "pic":contentimgs.toString()
-                };
-                fs.appendFile('./data/result1.json', JSON.stringify(stad) ,'utf-8', function (err) {
-                    if(err) throw new Error("appendFile failed...");
-                    //console.log("数据写入success...");
-                });
+                // let stad = {
+                //     "title":title,
+                //     "imgSrc":contentimgs.toString()
+                // };
+                dbHelper.insert(huPuAction.getInsertText({title:title,imgSrc:contentimgs.join(";")}));
 
-                fs.exists('data/download_images',function (exists) {
-                    if(!exists){
-                        fs.mkdir("data/download_images", function(err) {
-                            if (err) {
-                                throw err;
-                            }
-                            async.mapSeries(contentimgs,function(item, callback){
-                                setTimeout(function(){
-                                    //downloadPic方法下载图片
-                                    downloadPic(item, 'data/'+ (new Date()).getTime() +'.jpg');
-                                    callback(null, item);
-                                },400);
-                            }, function(err, results){});
-                        });
-                        console.log('ye')
-                    }else {
-                        async.mapSeries(contentimgs,function(item, callback){
-                            setTimeout(function(){
-                                //downloadPic方法下载图片
-                                downloadPic(item, 'data/download_images/'+ (new Date()).getTime() +'.jpg');
-                                callback(null, item);
-                            },400);
-                        }, function(err, results){});
-                    }
-                })
+                // fs.appendFile('./data/result1.json', JSON.stringify(stad) ,'utf-8', function (err) {
+                //     if(err) throw new Error("appendFile failed...");
+                //     //console.log("数据写入success...");
+                // });
+                //
+                // fs.exists('data/download_images',function (exists) {
+                //     if(!exists){
+                //         fs.mkdir("data/download_images", function(err) {
+                //             if (err) {
+                //                 throw err;
+                //             }
+                //             async.mapSeries(contentimgs,function(item, callback){
+                //                 setTimeout(function(){
+                //                     //downloadPic方法下载图片
+                //                     downloadPic(item, 'data/'+ (new Date()).getTime() +'.jpg');
+                //                     callback(null, item);
+                //                 },400);
+                //             }, function(err, results){});
+                //         });
+                //         console.log('ye')
+                //     }else {
+                //         async.mapSeries(contentimgs,function(item, callback){
+                //             setTimeout(function(){
+                //                 //downloadPic方法下载图片
+                //                 downloadPic(item, 'data/download_images/'+ (new Date()).getTime() +'.jpg');
+                //                 callback(null, item);
+                //             },400);
+                //         }, function(err, results){});
+                //     }
+                // })
 
 
             })
