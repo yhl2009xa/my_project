@@ -27,7 +27,7 @@
   "dependencies": {
     "fs": "0.0.1-security",
     "grunt": "^1.0.1",
-    "jquery": "^1.12.4",
+    "jquery": "^3.4.1",
     "path": "^0.12.7"
   }
 }
