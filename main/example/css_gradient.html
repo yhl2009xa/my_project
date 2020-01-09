@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css巧用背景渐变做滑动效果</title>
+</head>
+
+<style>
+    body {
+        position: relative;
+        padding: 50px;
+
+        background-image: linear-gradient(to right top, #ffcc00 50%, #eee 50%);
+
+        background-repeat: no-repeat;
+        z-index: 1;
+    }
+
+
+
+
+
+
+
+
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 5px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: #fff;
+        z-index: -1;
+    }
+    /*body::after{*/
+        /*content: '';*/
+        /*position: fixed;*/
+        /*top:20px;*/
+        /*left: 0px;*/
+        /*bottom: 0px;*/
+        /*right: 0px;*/
+        /*background: #fff;*/
+        /*z-index: -1;*/
+    /*}*/
+</style>
+
+<body>
+
+当然，如果是以单个城市来看，拥有程序员最多的就是我们的首都北京，北京拥有着中国 14.5% 的程序员。上海以 13.9% 的程序员占比紧随其后。之后就是杭州、深圳、广州、成都和南京等城市。
+
+
+640?wx_fmt=png
+
+程序员的购房情况
+
+
+大家都知道，现在房价很高，那程序员群体的购房情况如何呢。经过我们调查，有 30.4% 的程序员自己或者夫妻两人一起买房了，并有 10.8% 的程序员准备买房，有 43.1% 的人暂时还不打算买房，暂时租房住。
+
+640?wx_fmt=png
+
+经调查发现，已经购买了房子的程序员中，有 34% 的人是家里给买的房子，属于家里有矿型；有 42.5% 的程序员是自己购买的房子，属于工资高型；此外有 23.4% 的人是两口子一起买的房子，属于恩恩爱爱，共建小家庭型。
+
+640?wx_fmt=png
+
+有 35.8% 的程序员住在自己的房子里，不用租房。而租房的人中，房租主要为 500-3000 元/月之间。有 3.9% 的人，房租为 3001-4000 元/月。有 5.9% 的人，房租为 4000 元/月，小编猜测这部分人应该已经组建了小家庭，或者特别追求生活品质，并且工资应该不低。除此之外呢，有 1.2% 的人房租低于 500 元/月，还有 2.0% 的人，公司包住。
+
+
+640?wx_fmt=png
+
+程序员的居住条件
+
+
+640?wx_fmt=png
+
+据统计来看，有 31.5% 的人住的是幸福感很高的朝南阳光房，有 20.6% 的人住的是独卫大主卧或单居室。有 13.3% 的人住的是情侣小套房，有 13.9% 的人是住在家里，另外有 14.5% 的人住的是背阳房。
+
+
+640?wx_fmt=png
+
+程序员的公司属性
+
+
+640?wx_fmt=png
+
+经过我们的调查发现，有 69.7% 的程序员工作在民营企业，这也是正常现象，因为现在大部分好的互联网公司都是民营的。让我们眼前一亮的是，在接受调查的人群中，有 19.4% 的程序员为自由职业者，我们认为，自由工作是未来互联网行业发展的大趋势，你们是走在时代前列的人！除此之外，仅有 8.8% 的程序员工作在国企、外企及其他属性的公司。
+
+
+640?wx_fmt=png
+
+程序员跳槽状况
+
+<div class="wrapper">
+    <div class="main">
+
+
+    </div>
+</div>
+
+
+<style>
+
+
+
+    /*.main{*/
+        /*width: 400px;*/
+
+
+        /*position: relative;*/
+    /*}*/
+
+    /*.wrapper{*/
+        /*background: linear-gradient(to right top, #ffcc00 50%, #eee 50%);*/
+        /*height: 600px;*/
+        /*overflow-y: scroll;*/
+        /*overflow-x:hidden ;*/
+        /*width: 400px;*/
+    /*}*/
+    /*.wrapper:after{*/
+        /*content: '';*/
+        /*position: absolute;*/
+        /*top:20px;*/
+        /*left: 0px;*/
+        /*bottom: 0px;*/
+        /*right: 0px;*/
+        /*background: #fff;*/
+        /*z-index: -1;*/
+        /*height: 100%;*/
+    /*}*/
+</style>
+</body>
+</html>

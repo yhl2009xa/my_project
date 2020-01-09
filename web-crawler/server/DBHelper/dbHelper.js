@@ -1,5 +1,10 @@
 
 var pool = require('./sqlPool');
+var errorLog = require('../common/logger').getLogger("error");
+var sqlLog = require('../common/logger').getLogger();
+var crawlerLog = require('../common/logger').getLogger("crawler");
+
+
 var  dbHelper = function(){
 
 };
@@ -14,19 +19,32 @@ dbHelper.prototype.query = function (params) {
 };
 dbHelper.prototype.dBQuery = function(type,param){
     pool.getConnection((err,conn)=>{
-        //查询
-        let $sql = "select * from user;";
+        if(err){
+
+            if(param.type = "crawler"){
+                crawlerLog.error(err);
+            }else{
+                sqlLog.error(err);
+            }
+            return ;
+        }
         conn.query(
-            $sql,()=>function(err,res){
-                if(err){
-                    console.log("");
+            param.sqlText,function(error, results, fields){
+                pool.releaseConnection(conn);
+                if(param.type = "crawler"){
+                    crawlerLog.error(err);
                 }else{
-                    pool.releaseConnection(conn)
+                    sqlLog.error(err);
+                }
+                if(results && param.backFun){
+                    param.backFun(results);
                 }
             }
         );
+
     })
-}
+
+};
 
 /**
  * 删除操作
@@ -42,12 +60,12 @@ dbHelper.prototype.insert = function(params){
     this.dBQuery('insert',params);
 };
 
+
+
+
 dbHelper.prototype.update = function(params){
     this.dBQuery('update',params);
 };
-var hhh = new dbHelper();
 
-module.exports = hhh;
-
-
+module.exports = new dbHelper();
 

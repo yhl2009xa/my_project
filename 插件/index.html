@@ -25,8 +25,17 @@
 	<script type="text/javascript" src="js/jquery-2.1.0.js" ></script>
 	<script type="text/javascript" src="js/upImg.js" ></script>
 	<script>
-	var $url="http://192.168.30.111:8080/hqr/"   //后台接口地址，根据自己情况更改
-		upImg(2/1)
+		$.ajax({
+			type: "GET",
+			url: "https://3g.163.com/touch/reconstruct/article/list/BA10TA81wangning/0-15.html",
+			data: {page:1,count:15},
+			dataType: "json",
+			success: function(data){
+				alert(data.resultlength);
+			}
+		})
+	// var $url="http://192.168.30.111:8080/hqr/"   //后台接口地址，根据自己情况更改
+	// 	upImg(2/1)
 	</script>
 	</body>
 </html>
