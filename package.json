@@ -28,7 +28,7 @@
     "fastclick": "^1.0.6",
     "http-proxy": "^1.16.2",
     "iscroll": "^5.2.0",
-    "jquery": "^1.9.1",
+    "jquery": "^3.5.0",
     "js-base64": "^2.4.3",
     "js-md5": "^0.7.3",
     "jweixin": "^1.0.0",
